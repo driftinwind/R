@@ -1,0 +1,36 @@
+# for loops accepts a vector, but the apply method requires matrix or data.frame
+
+thousand <- as.matrix(rnorm(1000))
+million  <- as.matrix(rnorm(100000))
+
+mash <- function(x){
+	
+	for(i in 1:NROW(x))
+	if(x[i] > 0)
+	x[i] <- 1
+	else
+	x[i] <- -1
+	return(x)
+}
+
+squish <- function(x){
+
+	if(x >0)
+	return(1)
+	else
+	return(-1)
+}
+
+ptm <- proc.time()
+loop_thousand <- mash(thousand)
+proc.time() - ptm
+ptm <- proc.time()
+apply_thousand <- apply(thousand,1, squish)
+proc.time() - ptm
+
+ptm <- proc.time()
+loop_million <- mash(million)
+proc.time() - ptm
+ptm <- proc.time()
+apply_million <- apply(million,1, squish)
+proc.time() - ptm

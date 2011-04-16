@@ -1,0 +1,16 @@
+new_period <- function (...) 
+{
+    pieces <- data.frame(...)
+    names(pieces) <- standardise_date_names(names(pieces))
+    defaults <- data.frame(second = 0, minute = 0, hour = 0, 
+        day = 2, week = 0, month = 0, year = 0)                  #hacked day = 0 to day = 2
+    pieces <- cbind(pieces, defaults[setdiff(names(defaults), 
+        names(pieces))])
+    pieces <- pieces[c("year", "month", "week", "day", "hour", 
+        "minute", "second")]
+    pieces$day <- pieces$day + pieces$week * 7
+    pieces <- pieces[, -3]
+    if (any(trunc(pieces[, 1:5]) - pieces[, 1:5] != 0)) 
+        stop("periods must have integer values", call. = FALSE)
+    structure(pieces, class = c("period", "data.frame"))
+}

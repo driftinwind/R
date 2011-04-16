@@ -1,0 +1,70 @@
+require(quantmod)
+
+price <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/CORN.csv", sep=",", header=TRUE, format ="%m/%d/%Y"))
+
+specs <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/dave_corn.csv", sep=",", header=TRUE, format="%Y%m%d"))
+
+popcorn <- merge(price, specs)
+popcorn <- popcorn[,-c(3:9)]
+
+head(popcorn)
+length(popcorn)
+
+polenta <- popcorn[!apply(is.na(popcorn), 1, any) ,]
+probe_polenta <- na.omit(polenta)
+
+head(polenta)
+head(probe_polenta)
+
+length(popcorn)
+length(polenta)
+length(probe_polenta)
+# cream  <- polenta$spec.long/100000
+# cheese <- polenta$price
+# 
+# 
+# head(cheese)
+# head(cream)
+# 
+# polenta$price.ret <- Delt(polenta$price)
+# polenta$spec.ret  <- Delt(polenta$spec.long)
+# 
+# p.ret <- na.locf(polenta$price.ret, na.rm=TRUE)
+# s.ret <- na.locf(polenta$spec.ret , na.rm=TRUE)
+# 
+# p.ret <- p.ret["2002"]
+# s.ret <- s.ret["2002"]
+# 
+# 
+# png("~/Desktop/fit.png")
+# 
+# plot(p.ret, main="Price and Long Position Returns for 2002", col="blue4")
+# par(new=TRUE)
+# plot(s.ret, main="", col="darkorange2")
+# legend("topleft",col=c("blue4","darkorange2"),lty=1,legend=c("Price","Longs"))
+# 
+#dev.off()
+
+
+
+
+
+
+
+########################### GRAPH ############################
+
+# png("~/Desktop/test.png")
+
+# par(mar=c(5,4,4,5)+.1)
+# plot(cream, col="red", ann=FALSE, xaxt="n", yaxt="n", ylab=NULL,main=NULL)
+# par(new=TRUE)   #joins the charts
+# 
+# 
+# plot(cheese,  col="blue", axes=FALSE, xaxt="n", yaxt="n", ylab="", main="")
+# par(xaxt="n")
+# mtext("Corn Price",side=4,line=3)
+# legend("topleft",col=c("red","blue"),lty=1,legend=c("Long Specs","Corn Price"))
+# 
+# axis(4)
+
+# dev.off()

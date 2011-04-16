@@ -1,0 +1,28 @@
+require(quantmod)
+require(vioplot)
+
+getSymbols("GLD")
+
+
+friend    <- DonchianChannel( GLD[,c("GLD.High","GLD.Low")], n=5 )                    
+buddy     <- DonchianChannel( GLD[,c("GLD.High","GLD.Low")], n=10)                    
+pal       <- DonchianChannel( GLD[,c("GLD.High","GLD.Low")], n=25)                                                                                                           
+                                                                                      
+posse     <- merge(friend$mid, buddy$mid, pal$mid)                                                 
+                                                                                      
+GLD       <- merge(GLD, posse)                                                          
+GLD       <- na.locf(GLD, na.rm=TRUE)                                               
+
+compadre  <- ifelse(Cl(GLD) > GLD$mid & Cl(GLD) > GLD$mid.1 & Cl(GLD) > GLD$mid.2, 1,
+             ifelse(Cl(GLD) < GLD$mid & Cl(GLD) < GLD$mid.1 & Cl(GLD) < GLD$mid.2, -1, 0))
+
+hist(compadre, main="What are your positions over the past few years?", col="goldenrod")
+
+dinero    <- Lag(ROC(Cl(GLD)))*compadre
+dinero    <- na.locf(dinero, na.rm=TRUE)
+
+vioplot(dinero, names="Distribution of 'compadre' daily returns", col="blue") 
+
+
+ 
+

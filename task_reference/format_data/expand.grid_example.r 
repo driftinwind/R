@@ -1,0 +1,32 @@
+fac1 <- seq(5, 15, 5)
+fac2 <- seq(50, 80, 15)
+
+perms <- expand.grid(fac1,fac2)
+
+perms
+
+other_perms <- expand.grid(fac2, fac1)
+other_perms 
+
+# Answer to Capture iteration output into a data.frame in R from StackOverflow
+
+
+# fac1 <- seq(5, 15, 5)
+# fac2 <- seq(50, 80, 15)
+# 
+# Out <- apply(expand.grid(fac1,fac2),1,function(x){
+#   GLD$fast     <- SMA(Cl(GLD), n=x[1])
+#   GLD$slow     <- SMA(Cl(GLD), n=x[2])
+# 
+#   golden_cross <- Lag(ifelse(GLD$fast > GLD$slow, 1, -1))
+#   golden_cross <- na.locf(golden_cross, na.rm=TRUE)
+# 
+#   coin         <- ROC(Cl(GLD))*golden_cross
+# 
+#   coin_box     <- cumprod(1+coin)
+#   last_coin    <- coin_box[NROW(coin_box),]
+# 
+#   coin_value   <- round((last_coin-1)*100, digits=2)
+# 
+# return(c(x[1],x[2],Value=coin_value))
+# })

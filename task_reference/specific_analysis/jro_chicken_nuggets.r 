@@ -1,0 +1,21 @@
+require("quantmod")
+getSymbols("MCD")
+MCD$Cl.sma_10 <- Lag(SMA(Cl(MCD), n=10)) #yesterday's value
+MCD$Cl.sma_30 <- Lag(SMA(Cl(MCD), n=30)) #yesterday's value
+MCD$Vo.sma_10 <- Lag(SMA(Vo(MCD), n=10)) #yesterday's value
+MCD$Vo.sma_30 <- Lag(SMA(Vo(MCD), n=30)) #yesterday's value
+MCD$Cl.rsi <- Lag(RSI(Cl(MCD))) #yesterday's value
+MCD$Cl.return.daily <- Lag(Delt(Cl(MCD))) #yesterday's value
+MCD$Cl.return.10 <- Lag(Delt(Cl(MCD), k=10)) #yesterday's value
+MCD$Cl.return.30 <- Lag(Delt(Cl(MCD), k=30)) #yesterday's value
+
+ptm <- proc.time()
+# system.time(MCD$answer <- sign(Delt(Cl(MCD))))
+MCD$answer <- sign(Delt(Cl(MCD)))
+MCD <- na.locf(MCD, na.rm=TRUE)
+MCD <- cbind(MCD$answer, MCD[,-ncol(MCD)])
+proc.time() - ptm
+
+
+output <- apply(MCD, 1, function(x) paste(1:length(x), x, sep=": ", collapse=" "))
+write(output, "~/Desktop/test.txt")

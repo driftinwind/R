@@ -1,0 +1,16 @@
+require(quantmod)
+require(vioplot)
+
+getSymbols("GLD")
+
+for(i in seq(2, 12, 1))
+  for(j in seq(8, 24, 3))
+    for(k in seq(10, 50, 5))
+
+{
+	
+	# algorithm goes here
+	
+	# reporting goes here
+	
+}	

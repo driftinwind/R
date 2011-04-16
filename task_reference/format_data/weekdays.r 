@@ -1,0 +1,14 @@
+require(quantmod)
+require(chron)
+
+corn <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/CORN.csv", sep=",", format ="%m/%d/%Y", header=TRUE))
+
+head(corn)
+
+# time(corn) is the only way to get at the date variable in a zoo, xts object
+
+tues <- weekdays(time(corn)) == "Tuesday"
+
+CORN <- merge(corn, tues)
+
+class(CORN)

@@ -1,0 +1,1 @@
+write.table(meal, "~/Desktop/my_file.txt")

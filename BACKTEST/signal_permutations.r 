@@ -1,0 +1,20 @@
+require(quantmod)
+
+getSymbols("GLD")
+
+for(i in seq(5, 15, 5))
+  for(j in seq(50, 80, 15))
+
+{
+	GLD$fast     <- SMA(Cl(GLD), n=i)     
+	GLD$slow     <- SMA(Cl(GLD), n=j)         
+
+	golden_cross <- Lag(ifelse(GLD$fast > GLD$slow, 1, -1))
+	golden_cross <- na.locf(golden_cross, na.rm=TRUE)
+	
+
+		
+	# cat(i,j, golden_cross, "\n", file="~/Desktop/goldcat", append=TRUE)  # output to file
+	cat(i,j, golden_cross, "\n")  # output to console
+	
+}

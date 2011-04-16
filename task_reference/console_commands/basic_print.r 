@@ -1,0 +1,4 @@
+x <- "print me"
+print(x)
+
+cat(c)

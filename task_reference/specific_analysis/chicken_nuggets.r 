@@ -1,0 +1,34 @@
+require("quantmod")
+
+getSymbols("MCD")
+
+MCD$Cl.sma_10       <- Lag(SMA(Cl(MCD), n=10))    #yesterday's value
+MCD$Cl.sma_30       <- Lag(SMA(Cl(MCD), n=30))    #yesterday's value
+MCD$Vo.sma_10       <- Lag(SMA(Vo(MCD), n=10))    #yesterday's value
+MCD$Vo.sma_30       <- Lag(SMA(Vo(MCD), n=30))    #yesterday's value
+MCD$Cl.rsi          <- Lag(RSI(Cl(MCD)))          #yesterday's value
+MCD$Cl.return.daily <- Lag(Delt(Cl(MCD)))         #yesterday's value
+MCD$Cl.return.10    <- Lag(Delt(Cl(MCD), k=10))   #yesterday's value
+MCD$Cl.return.30    <- Lag(Delt(Cl(MCD), k=30))   #yesterday's value
+
+ptm <- proc.time()
+
+MCD$pre_answer      <- Delt(Cl(MCD))              #today's pre_answer
+
+squish <- function(x){
+
+	if(x>0)
+	return(1)
+	else(x <= 0)
+	return(-1)
+}
+ 
+MCD <- na.locf(MCD, na.rm=TRUE)  
+
+MCD$answer <- cbind(MCD, apply(MCD,1, function(x)squish(x[15])))
+
+# system.time(MCD$answer <- cbind(MCD, apply(MCD,1, function(x)squish(x[15]))))
+ proc.time() - ptm
+
+
+write.table(MCD, "~/Desktop/goo", row.names=FALSE, col.names=FALSE)

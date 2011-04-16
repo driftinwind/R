@@ -1,0 +1,1 @@
+curve(dnorm(x,0,1),xlim=c(-3,3),main='Normal Density')

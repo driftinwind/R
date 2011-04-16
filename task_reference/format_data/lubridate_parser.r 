@@ -1,0 +1,11 @@
+require(lubridate)
+
+num <- c(19820101, 19820102, 19820103)
+
+class(num)
+
+dat <- parse_date(num, c("%Y", "%m", "%d"), sep="")
+
+dat
+
+

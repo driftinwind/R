@@ -1,0 +1,31 @@
+million  <- as.matrix(rnorm(100000))
+
+mash <- function(x){
+
+for(i in 1:NROW(x))
+if(x[i] > 0)
+x[i] <- 1
+else
+x[i] <- -1
+return(x)
+}
+
+squish <- function(x){
+
+if(x >0)
+return(1)
+else
+return(-1)
+}
+
+
+      
+system.time(sapply_million <- matrix(unlist(sapply(million,squish,simplify=F))))
+
+system.time(sapply2_million <- matrix(sapply(million,squish)))
+
+system.time(loop_million <- mash(million))
+ 
+all.equal(loop_million,sapply_million)
+
+all.equal(loop_million,sapply2_million)

@@ -1,0 +1,9 @@
+require("quantmod")
+
+corn <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/CORN.csv", sep=",", format ="%m/%d/%Y", header=TRUE))
+
+head(corn)
+
+corn <- to.weekly(corn, indexAt='startof("Thursday")') #[,4]
+
+head(corn)

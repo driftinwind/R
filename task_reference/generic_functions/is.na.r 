@@ -1,0 +1,21 @@
+
+
+x.new <- x[!apply(is.na(x), 1, any) ,] 
+
+
+
+# isolate <- function(x,y){
+# 	
+# 	if ((is.na(x)) | (is.na(y)))
+# 	    return ("NA")
+# 	else
+# 	    return (1)
+# }
+# 
+# isolate <- function(x,y){
+# 	
+# 	if ((is.na(x)) | (is.na(y)))
+# 	    # remove that row
+# }
+# 
+# !apply(is.na(x), 1, any)

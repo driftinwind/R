@@ -1,0 +1,5 @@
+require(quantmod)
+
+getSymbols("^TNX")
+
+chartSeries(TNX, TA=c(addSMA(200), addSMA(50, col="blue")))

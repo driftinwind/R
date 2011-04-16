@@ -1,0 +1,4 @@
+HL <- function(x) {
+ if(all(has.Hi(x), has.Lo(x)))
+   x[, c(has.Hi(x, 1), has.Lo(x, 1)]
+}

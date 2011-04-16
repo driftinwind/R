@@ -1,0 +1,11 @@
+# remove an entire row if any element has NA
+
+x.new <- x[!apply(is.na(x), 1, any) ,] 
+
+# same but refactored by Patrick Burns
+
+x.new <- na.omit(x)
+
+
+
+

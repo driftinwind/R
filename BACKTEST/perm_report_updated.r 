@@ -1,0 +1,27 @@
+require(quantmod)
+
+getSymbols("GLD")
+
+for(i in seq(5, 50, 5))
+  for(j in seq(50, 200, 15))
+
+{
+	GLD$fast     <- SMA(Cl(GLD), n=i)     
+	GLD$slow     <- SMA(Cl(GLD), n=j)         
+
+	cross        <- na.omit(Lag(ifelse(GLD$fast > GLD$slow, 1, -1)))
+	
+	ret          <- dailyReturn(Cl(GLD))*cross        
+	pos          <- ret[ret > 0]     # ret[which(ret > 0)]
+	neg          <- ret[ret < 0]
+
+	correct      <- NROW(pos)/(NROW(pos) + NROW(neg))
+	ave.winner   <- sum(pos)/NROW(pos)
+	ave.loser    <- sum(neg)/NROW(neg)
+
+	expect       <- (ave.winner * correct) - (ave.loser * (1 - correct))
+		
+	cat(i,j, expect, "\n", file="~/Desktop/goldcat", append=TRUE)  # output to file
+	cat(i,j, expect, "\n")  # output to console
+	
+}

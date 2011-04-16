@@ -1,0 +1,10 @@
+x <- 1:5
+y1 <- rnorm(5)
+y2 <- rnorm(5,20)
+par(mar=c(5,4,4,5)+.1)
+plot(x,y1,type="l",col="red")
+par(new=TRUE)
+plot(x, y2,,type="l",col="blue",xaxt="n",yaxt="n",xlab="",ylab="")
+axis(4)
+mtext("y2",side=4,line=3)
+legend("topleft",col=c("red","blue"),lty=1,legend=c("y1","y2"))

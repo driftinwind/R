@@ -1,0 +1,78 @@
+require(quantmod)
+
+getSymbols("GLD")
+
+# feed the brain
+
+GLD$fast     <- SMA(Cl(GLD), n=50)     
+GLD$slow     <- SMA(Cl(GLD), n=200)         
+
+# algorithm signal : get rid of NA - lag - algorithm
+
+cross <- na.omit(Lag(ifelse(GLD$fast > GLD$slow, 1, -1)))
+
+# unleash the algorithm upon the data
+
+ret      <- dailyReturn(Cl(GLD))*cross            
+pos      <- ret[ret > 0]
+neg      <- ret[ret < 0]
+
+# hist(ret, col="goldenrod")
+# hist(pos, col="green")
+# hist(neg, col="red")
+
+# start assumptions
+
+correct      <- NROW(pos)/(NROW(pos) + NROW(neg))
+ave.winner   <- sum(pos)/NROW(pos)
+ave.loser    <- sum(neg)/NROW(neg)
+                  
+expect       <- (ave.winner * correct) - (ave.loser * (1 - correct))
+
+expect
+
+#  long v short frequency
+
+long.total    <- NROW(cross == 1)
+short.total   <- NROW(cross == -1)
+
+long_bias     <- long.total/(short.total + long.total)*100
+
+long_bias
+
+# long v short performance
+
+long.cross    <- cross[cross == 1]
+short.cross   <- cross[cross == -1]
+              
+long_ret      <- dailyReturn(Cl(GLD))*long.cross
+short_ret     <- dailyReturn(Cl(GLD))*short.cross
+              
+long.pos      <- long_ret > 0
+long.neg      <- long_ret < 0
+short.pos     <- short_ret > 0
+short.neg     <- short_ret < 0
+
+long.correct  <- NROW(long.pos)/(NROW(long.pos) + NROW(long.neg))*100
+short.correct <- NROW(short.pos)/(NROW(short.pos) + NROW(short.neg))*100
+
+ave.long.winner   <- sum(long.pos)/NROW(long.pos)
+ave.long.loser    <- sum(long.neg)/NROW(long.neg)
+                  
+ave.short.winner  <- sum(short.pos)/NROW(short.pos)
+ave.short.loser   <- sum(short.neg)/NROW(short.neg)
+
+# long v short expectation
+
+expect.long       <- (ave.long.winner * long.correct) - (ave.long.loser * (1-long.correct))
+expect.short      <- (ave.short.winner * short.correct) - (ave.short.loser * (1-short.correct))
+
+cat("Long " ,long_bias, " percent of the time", "\n")
+cat("Long Winning Percentage  ", long.correct, "\n")
+cat("Short Winning Percentage ", short.correct, "\n")
+cat("Long Expectation ", expect.long, "\n")
+cat("Shot Expectation ", expect.short, "\n")
+
+require(vioplot)
+
+vioplot(ret, col="darkorange")

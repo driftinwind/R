@@ -1,0 +1,44 @@
+require(quantmod)
+require(vioplot)
+
+getSymbols("SPY;GLD")
+getSymbols("DGS10;DGS2", src="FRED")
+ 
+BND              <- merge(DGS10, DGS2)
+BND$SPREAD        <- BND$DGS10 - BND$DGS2
+BND               <- na.locf(BND, na.rm=TRUE)
+
+SPY$fast          <- SMA(Cl(SPY), n=10)   
+SPY$slow          <- SMA(Cl(SPY), n=30)  
+                         
+BND$fast       <- SMA(BND$SPREAD, n=4)       
+BND$slow       <- SMA(BND$SPREAD, n=9)       
+
+GLD$fast          <- SMA(Cl(GLD), n=4)
+GLD$slow          <- SMA(Cl(GLD), n=9)
+
+signal_one        <- Lag(ifelse(SPY$fast > SPY$slow , 1, 
+	                      ifelse(SPY$fast < SPY$slow , -1, 0)))         
+
+signal_two        <- Lag(ifelse(SPY$fast > SPY$slow & BND$fast < BND$slow, 1, 
+                          ifelse(SPY$fast < SPY$slow & BND$fast < BND$slow, -1, 0)))
+                  
+signal_three      <- Lag(ifelse(SPY$fast > SPY$slow & GLD$fast < GLD$slow, 1, 
+ 	                      ifelse(SPY$fast < SPY$slow & GLD$fast < GLD$slow, -1, 0)))
+
+r_one             <- ROC(Cl(SPY))*signal_one     
+summary(r_one)      
+r_two             <- ROC(Cl(SPY))*signal_two          
+summary(r_two)
+r_three           <- ROC(Cl(SPY))*signal_three          
+
+r_one             <- na.locf(r_one, na.rm=TRUE)
+r_two             <- na.locf(r_two, na.rm=TRUE)
+r_three           <- na.locf(r_three, na.rm=TRUE)
+
+
+vioplot(r_one , r_two, r_three, names=c("No Filter", "2/10 Spread Filter", "Gold Filter"))
+
+
+
+

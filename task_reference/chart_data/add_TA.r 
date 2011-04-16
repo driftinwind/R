@@ -1,0 +1,18 @@
+require("quantmod")
+
+getSymbols('SBUX')
+SBUX <- SBUX['2010']
+
+# barChart(SBUX)
+# addTA(EMA(Cl(SBUX)), on=1, col=6)
+# addTA(OpCl(SBUX), col=4, type='b', lwd=2)
+
+barChart(SBUX, theme="white")
+addTA(DonchianChannel(SBUX[,c("SBUX.High", "SBUX.Low")], n=1), on=1, col=6)
+# addTA(DonchianChannel(SBUX[,c("SBUX.High", "SBUX.Low")]), n=20, on=1, col=4)
+# addTA(DonchianChannel(SBUX[,c("SBUX.High", "SBUX.Low")]), n=40, on=1, col=2)
+
+#  Joshua Ulrich
+
+addTA(DonchianChannel(cbind(Hi(SPY),Lo(SPY))), on=1)
+

@@ -1,0 +1,3 @@
+week <- function (x) 
+yday(x)%/%7 + 3
+

@@ -1,0 +1,39 @@
+# The idea is to only loop over signals, and then once
+# they are generated and captured, vectorize them across
+# returns data
+
+
+
+require(quantmod)
+
+getSymbols("GLD")
+
+slow         <- seq(5, 15, 5)
+fast         <- seq(50, 80, 15)
+
+cross  <- apply(expand.grid(fast,slow),1,function(x){
+  
+GLD$fast     <- SMA(Cl(GLD), n=x[1])
+GLD$slow     <- SMA(Cl(GLD), n=x[2])
+
+gold_cross        <- na.omit(Lag(ifelse(GLD$fast > GLD$slow, 1, -1)))
+  
+# return(c(x[1],x[2],cross))  # cross is not maintained as a matrix
+
+# return(gold_cross, colnames=c("a", "b", "c", "d", "e", "f", "g", "h", "i"))
+
+return(gold_cross)
+})
+
+# as.data.frame(t(Out))
+
+class(cross)
+
+triple <- na.omit(merge(cross[[1]], cross[[2]], cross[[3]],
+                        cross[[4]], cross[[5]], cross[[6]],  
+                        cross[[7]], cross[[8]], cross[[9]] ), check.names = FALSE)
+	             
+head(triple)
+
+
+

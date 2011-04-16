@@ -1,0 +1,33 @@
+require("quantmod")   
+                                                           
+getSymbols("GLD")   
+                                   	
+GLD$fast    <- BBands(( GLD[,4] ), n=10, sd=0.5)                                         
+GLD$slow    <- BBands(( GLD[,4] ), n=30, sd=0.5)      
+GLD         <- na.locf(GLD, na.rm=TRUE)                                   
+                                           
+
+head(GLD)                               
+position 	<- ifelse (GLD$mavg > GLD$up.1, 1,                             
+                ifelse(GLD$mavg < GLD$dn.1, -1, NA))
+			
+position    <- na.locf(position, na.rm=TRUE)
+
+hist(position, 
+	 main="How often have you been long
+	  vs short in the last few years?",
+     col="goldenrod")
+
+returns     <- ROC(Cl(GLD))*position
+hist(returns, main="What do your daily returns look like?", col="darkslategray2")
+
+returns     <- Lag(ROC(Cl(GLD)))*position
+hist(returns, main="Ahem, without Look-Ahead Bias?", col="darkslategray")
+ 
+require(vioplot)
+returns <- na.locf(returns, na.rm=TRUE)
+vioplot(returns, names="Got anything more intuitive?", col="blue")
+
+paste("What is the closing price for gold tomorrow?")
+trick_question <- Cl(GLD[NROW(GLD)+1, ])
+trick_question

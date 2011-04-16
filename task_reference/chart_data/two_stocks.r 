@@ -1,0 +1,21 @@
+require(quantmod)
+
+# getSymbols("GLD ; AAPL")
+getSymbols("GLD")
+getSymbols("AAPL")
+
+# plot(GLD)
+# par(new=TRUE)
+# plot(TLT)
+
+# that's the guts of it, but we need it looking legible, so 
+
+par(mar=c(5,4,4,5)+.1)
+plot(GLD, col="red", ylab="GLD", main="Apple is Golden")
+par(new=TRUE)
+plot(AAPL, col="blue", xaxt="n", main="")
+par(xaxt="n")
+axis(4)
+mtext("AAPL",side=4,line=3)
+legend("topleft",col=c("red","blue"),lty=1,legend=c("GLD","AAPL"))
+

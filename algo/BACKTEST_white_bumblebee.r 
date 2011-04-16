@@ -1,0 +1,17 @@
+require(quantmod)
+require(PerformanceAnalytics)
+
+getSymbols("AAPL")
+
+dvi <- DVI(Cl(GSPC))
+
+sig <- Lag(ifelse(dvi$dvi < 0.5, 1, -1))
+
+ret <- ROC(Cl(GSPC))*sig
+ret <- ret['2009-06-02/2010-09-07']
+eq <- cumprod(1+ret)
+plot(eq)
+
+table.Drawdowns(ret, top=10)
+table.DownsideRisk(ret)
+charts.PerformanceSummary(ret)

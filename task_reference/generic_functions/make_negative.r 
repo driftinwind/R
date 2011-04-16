@@ -1,0 +1,15 @@
+
+
+
+neg <- function(x){
+	
+	for(i  in 1:NROW(x))
+	x[i] <- -x[i]
+	return(x)
+
+}
+
+# neg <- function(x){
+# 	x = -(x)
+# 	return(x)
+# }

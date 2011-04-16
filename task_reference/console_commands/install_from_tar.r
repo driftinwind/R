@@ -1,0 +1,1 @@
+> install.packages("~/R/packages/contrib/ash_1.0-9.tar.gz", repos=NULL) 

@@ -1,0 +1,12 @@
+start_tue <- function(x){
+	 
+	new_set <- xts()
+	
+	for(i in 1:NROW(x))
+	  if( x$tue == 1)
+	  new_set[i,] <- x[i,]
+	
+	return(new_set)    	
+}
+
+

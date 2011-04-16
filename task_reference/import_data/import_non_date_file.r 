@@ -1,0 +1,5 @@
+require(vioplot)
+
+gold <- read.table("~/Desktop/goldcat")
+
+vioplot(gold$V3)

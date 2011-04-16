@@ -1,0 +1,7 @@
+.index <- function (x, ...) 
+{
+    if (is.list(attr(x, "index"))) {
+        attr(x, "index")[[1]]
+    }
+    else attr(x, "index")
+}

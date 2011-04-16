@@ -1,0 +1,41 @@
+require("quantmod")
+
+price <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/CORN.csv", sep=",", header=TRUE, format ="%m/%d/%Y"))
+specs <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/dave_corn.csv", sep=",", header=TRUE, format="%Y%m%d"))
+
+corn <- merge(price, specs)
+corn <- corn[,-c(3:9)]
+
+corn$tuesdays <- weekdays(time(corn)) == "Tuesday"
+
+head(corn)
+
+
+
+head(corn)
+
+# count days from any partial week at the beginning
+
+start_len <- ifelse(corn$tuesdays[1], 0, rle(corn$tuesdays)$lengths[1])
+
+# assign a week value to every row
+
+corn$week <- c(rep(0, start_len), 1 + seq_len(nrow(corn) - start_len) %/% 7)
+
+# concatenate the start date of the first (possibly incomplete) week
+# to the start dates for all the following weeks
+
+week_starts <- as.Date(time(corn)[corn$tuesdays])
+if(start_len > 0) week_starts <- c(week_starts[1] - 7, week_starts) 
+
+# calculate weekly means and assemble to a data frame
+
+corn <- na.omit(corn)
+tail(corn)
+
+# corn_values <- aggregate(price~week, data = corn, FUN = mean)$price
+corn.w <- data.frame(week_starts, price)
+
+
+head(corn.w)
+#

@@ -1,0 +1,38 @@
+million  <- as.matrix(rnorm(100000))
+
+mash <- function(x){
+
+for(i in 1:NROW(x))
+if(x[i] > 0)
+x[i] <- 1
+else
+x[i] <- -1
+return(x)
+}
+
+squish <- function(x){
+
+if(x >0)
+return(1)
+else
+return(-1)
+}
+
+
+ptm <- proc.time()
+loop_million <- mash(million)
+proc.time() - ptm
+
+
+ptm <- proc.time()
+apply_million <- apply(million,1, squish)
+proc.time() - ptm
+
+NROW(apply_million)
+NROW(loop_million)
+
+head(apply_million)
+head(loop_million)
+
+class(apply_million)
+class(loop_million)

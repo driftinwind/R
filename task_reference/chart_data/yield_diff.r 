@@ -1,0 +1,7 @@
+require(quantmod)
+
+getSymbols(c("DGS10", "DGS2"), src="FRED")
+
+Ten_Two <- DGS10-DGS2
+
+chartSeries(Ten_Two)

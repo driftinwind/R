@@ -1,0 +1,50 @@
+require(quantmod)
+
+price <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/CORN.csv", sep=",", header=TRUE, format ="%m/%d/%Y"))
+
+specs <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/dave_corn.csv", sep=",", header=TRUE, format="%Y%m%d"))
+
+popcorn <- merge(price, specs)
+popcorn <- popcorn[,-c(8,9)]
+
+head(popcorn)
+length(popcorn)
+
+polenta <- na.omit(popcorn)
+
+head(polenta)
+
+# convert short contracts to negative values
+
+neg <- function(x){
+	
+	for(i  in 1:NROW(x))
+	x[i] <- -x[i]
+	return(x)
+
+}
+
+polenta$spec.short  <- neg(polenta$spec.short)
+polenta$com.short   <- neg(polenta$com.short)
+polenta$small.short <- neg(polenta$small.short)
+
+head(polenta)
+
+# lag the contracts
+# WARNING, the date only matches the price and not the contracts
+# the contracts are one period old
+
+polenta$spec.long   <- Lag(polenta$spec.long)
+polenta$spec.short  <- Lag(polenta$spec.short)
+polenta$com.long    <- Lag(polenta$com.long)
+polenta$com.short   <- Lag(polenta$com.short)
+polenta$small.long  <- Lag(polenta$small.long)
+polenta$small.short <- Lag(polenta$small.short)
+
+head(polenta)
+tail(polenta)
+
+# get rid of the first row 
+
+polenta.c <- na.locf(polenta, na.rm=TRUE)
+

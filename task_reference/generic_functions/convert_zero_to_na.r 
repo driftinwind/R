@@ -1,0 +1,7 @@
+no_zero <- function(x){
+	
+	if (x==0)
+	    return ("NA")
+	else
+	    return (1)
+}

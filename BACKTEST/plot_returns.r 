@@ -1,0 +1,47 @@
+require(vioplot)
+require(scatterplot3d)
+# require(rgl)
+# require(Rcmdr)
+
+gold <- read.table("~/Desktop/goldcat")
+
+fast         <- gold$V1
+slow         <- gold$V2
+long         <- gold$V3
+short        <- gold$V4
+net          <- gold$V5
+best         <- gold$V6
+worst        <- gold$V7
+
+
+dens <- density(net)
+
+plot(dens, main="Fair Coin?")                                      
+                                                                                                        
+   lowest      <-  min(net)                                                                                 
+   select_lo   <-  -15                                                                             
+   highest     <-  max(net)                                                                                 
+   select_hi   <-   15                                                                                 
+                                                                                                        
+   x1 <- min(which(dens$x >= select_hi))                                                                
+   x2 <- max(which(dens$x <  highest))                                                                  
+   x3 <- min(which(dens$x >= lowest))                                                                   
+   x4 <- max(which(dens$x <  select_lo))                                                                
+                                                                                                        
+   with(dens, polygon(x=c(x[c(x1,x1:x2,x2)]), y= c(0, y[x1:x2], 0), col="lightsteelblue"))              
+   with(dens, polygon(x=c(x[c(x3,x3:x4,x4)]), y= c(0, y[x3:x4], 0), col="lightgoldenrod2"))
+
+hist(net, col="burlywood")
+
+vioplot(net, col="goldenrod")
+
+scatterplot3d(slow, fast, net,  angle = 120, type="h")
+
+hist(long, col="green")
+hist(short, col="red")
+hist(best, col="blue")
+hist(worst, col="orange")
+
+# plot3d(fast, slow, net, col="red", size=3) 
+
+# scatter3d(fast, slow, net) 

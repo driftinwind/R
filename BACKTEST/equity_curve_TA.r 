@@ -1,0 +1,30 @@
+require(quantmod)
+require(PerformanceAnalytics)
+
+getSymbols("GLD")
+
+dvi <- DVI(Cl(GLD))
+
+sig <- Lag(ifelse(dvi$dvi < 0.5, 1, -1))
+
+ret <- na.omit(dailyReturn(Cl(GLD))*sig)
+ret1 <- na.omit(ROC(Cl(GLD))*sig)
+eq  <- cumprod(1+ret)
+eq1  <- cumprod(1+ret1)
+
+# head(eq)
+# head(eq1)
+# 
+# plot(eq)
+# plot(eq1)
+
+eq_10 <- SMA(eq)
+eq_20 <- SMA(eq, n=20)
+
+eq_TA <- na.omit(merge(eq_10, eq_20))
+
+head(eq_TA)
+
+RET <- na.omit(merge(sig, eq_TA))
+
+head(RET)

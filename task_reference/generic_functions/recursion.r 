@@ -1,0 +1,24 @@
+# ptm <- proc.time()
+# 
+# factorial <- function(x){
+# 	
+# 	if(x==1)
+# 		return( 1)
+# 	else
+# 		return(x*factorial(x-1))
+# 		
+# }
+# 
+# factorial(144)
+# proc.time() - ptm
+# 
+# require("gregmisc")
+# 
+# ptm <- proc.time()
+# factorial(144)
+# proc.time() - ptm
+
+
+ptm <- proc.time()
+prod(2:144)
+proc.time() - ptm

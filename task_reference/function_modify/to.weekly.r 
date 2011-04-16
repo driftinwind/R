@@ -1,0 +1,9 @@
+to.weekly <- function (x, drop.time = TRUE, name, ...) 
+{
+    if (missing(name)) 
+        name <- deparse(substitute(x))
+    x <- to.period(x, "weeks", name = name, ...)
+    if (drop.time) 
+        x <- .drop.time(x)
+    return(x)
+}

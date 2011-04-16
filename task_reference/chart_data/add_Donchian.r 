@@ -1,0 +1,32 @@
+addDonchianChannels <- function (n = 20, sd = 2, maType = "SMA", draw = "bands", on = -1) 
+{
+    stopifnot("package:TTR" %in% search() || require("TTR", quietly = TRUE))
+    draw.options <- c("bands", "percent", "width")
+    draw <- draw.options[pmatch(draw, draw.options)]
+    lchob <- get.current.chob()
+    x <- as.matrix(lchob@xdata)
+    chobTA <- new("chobTA")
+    if (draw == "bands") {
+        chobTA@new <- FALSE
+    }
+    else {
+        chobTA@new <- TRUE
+        on <- NULL
+    }
+    xx <- if (is.OHLC(x)) {
+        cbind(Hi(x), Lo(x), Cl(x))
+    }
+    else x
+    bb <- BBands(xx, n = n, maType = maType, sd = sd)
+    chobTA@TA.values <- bb[lchob@xsubset, ]
+    chobTA@name <- "chartBBands"
+    chobTA@call <- match.call()
+    chobTA@on <- on
+    chobTA@params <- list(xrange = lchob@xrange, colors = lchob@colors, 
+        color.vol = lchob@color.vol, multi.col = lchob@multi.col, 
+        spacing = lchob@spacing, width = lchob@width, bp = lchob@bp, 
+        x.labels = lchob@x.labels, time.scale = lchob@time.scale, 
+        n = n, ma = maType, sd = sd, draw = draw)
+    return(chobTA)
+}
+<environment: namespace:quantmod>

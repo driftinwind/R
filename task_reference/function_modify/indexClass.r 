@@ -1,0 +1,7 @@
+indexClass <- function (x) 
+{
+    class <- attr(attr(x, "index"), "tclass")
+    if (is.null(class)) 
+        attr(x, ".indexCLASS")
+    else class
+}

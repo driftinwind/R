@@ -1,0 +1,10 @@
+################ all.equal #####################
+
+all.equal(loop_million,sapply2_million)
+[1] TRUE
+
+################ system.time #####################
+
+system.time(sapply2_million <- matrix(sapply(million,squish)))
+   user  system elapsed 
+   0.34    0.00    0.34

@@ -1,0 +1,17 @@
+golden_cross_test_machine <- function(sym="GLD", slow=200, fast=50){
+
+require(quantmod)
+require(PerformanceAnalytics)
+
+getSymbols(sym, auto.assign=FALSE)
+
+sym$fast    <- SMA(Cl(sym), n=fast)           
+sym$slow    <- SMA(Cl(sum), n=slow)          
+
+bingo       <- Lag(ifelse(sym$fast > sym$slow, 1, -1))
+
+ret         <- ROC(Cl(sym))*bingo             
+ret         <- ret["2008/2010"]                                                 
+
+charts.PerformanceSummary(ret)
+}

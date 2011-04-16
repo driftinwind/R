@@ -1,0 +1,18 @@
+require(quantmod)
+require(PerformanceAnalytics)
+
+getSymbols("^GSPC")
+
+GSPC$fast    <- SMA(Cl(GSPC), n=50)           
+GSPC$slow    <- SMA(Cl(GSPC), n=200)          
+
+golden_cross <- Lag(ifelse(GSPC$fast > GSPC$slow, 1, -1))
+
+ret          <- ROC(Cl(GSPC))*golden_cross           
+ret          <- ret["2008/2010"]                           
+eq           <- cumprod(1+ret)                       
+
+plot(eq)
+table.Drawdowns(ret, top=10)
+table.DownsideRisk(ret)
+charts.PerformanceSummary(ret)

@@ -1,0 +1,15 @@
+library(vioplot) 
+library(quantmod)
+
+VIX <- getSymbols("^VIX", auto.assign=FALSE)[,4]
+SPX <- getSymbols("^GSPC", auto.assign=FALSE)[,4]
+
+VIX <- VIX/100
+SPX <- Delt(SPX, k=30)
+SPX <- na.locf(SPX, na.rm=TRUE)
+# SPX <- abs(SPX)*sqrt(365/30)  # this appears non-sensical
+SPX <- abs(SPX)
+vioplot(VIX, SPX, names=c("VIX", "SPX"), col="red3")
+
+title("Violins of Volatility")
+

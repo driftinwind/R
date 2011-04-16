@@ -1,0 +1,30 @@
+require(quantmod)
+
+# opt <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/SPX_APR.csv", sep=",", format ="%m/%d/%Y", header=TRUE))
+
+
+opt <- read.table("~/Cream/R/RMilk/task_reference/test_data/SPX_APR.csv", sep=",", header=TRUE)
+
+opt <- opt[,c(1,9,10,15)]
+
+names(opt)[1] <- "one"
+names(opt)[2] <- "two"
+names(opt)[3] <- "three"
+names(opt)[4] <- "four"
+
+opt <- data.frame(opt$two, opt$three, opt$one, opt$four)
+
+names(opt)[1] <- "Expiry"
+names(opt)[2] <- "Strike"
+names(opt)[3] <- "Call"
+names(opt)[4] <- "Put"
+
+strike <- opt$Strike
+call   <- opt$Call
+put    <- opt$Put
+
+denc <- density(call)
+denp <- density(put)
+
+plot(denc, main="Huh?")
+plot(denp, main="?")

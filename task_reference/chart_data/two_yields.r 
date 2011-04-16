@@ -1,0 +1,19 @@
+require(quantmod)
+
+getSymbols("DGS2", src="FRED")
+getSymbols("DGS10", src="FRED")
+
+# plot(DGS2)
+# par(new=TRUE)
+# plot(DGS10)
+
+# that's the guts of it, but we need it looking legible, so 
+
+par(mar=c(5,4,4,5)+.1)
+par(new=TRUE)
+plot(DGS2, col="blue", xaxt="n", main="")
+# par(xaxt="n")
+# axis(4)
+# mtext("DGS10",side=4,line=3)
+# legend("topleft",col=c("red","blue"),lty=1,legend=c("2-Year","10-Year"))
+

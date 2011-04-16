@@ -1,0 +1,38 @@
+require(quantmod)
+
+getSymbols("GLD")
+
+for(i in seq(5, 50, 5))
+  for(j in seq(50, 200, 15))
+
+{
+	GLD$fast     <- SMA(Cl(GLD), n=i)     
+	GLD$slow     <- SMA(Cl(GLD), n=j)         
+
+	golden_cross <- Lag(ifelse(GLD$fast > GLD$slow, 1, -1))
+	golden_cross <- na.locf(golden_cross, na.rm=TRUE)
+	
+	gold_long    <- NROW(which(golden_cross == 1))
+	gold_short   <- NROW(which(golden_cross == -1)) 
+		
+	coin         <- ROC(Cl(GLD))*golden_cross
+	best_coin    <- max(coin)
+	worst_coin   <- min(coin)
+	last_coin    <- cumprod(1+coin)[NROW(coin),]  #cannot take out the 1+
+	
+	annual_coin  <- round((last_coin-1)*100, digits=2)/(NROW(coin)/252)
+		
+	cat(i,j, gold_long, gold_short, annual_coin, best_coin, worst_coin, "\n", file="~/Desktop/goldcat", append=TRUE)  # output to file
+	cat(i,j, gold_long, gold_short, annual_coin, best_coin, worst_coin, "\n")  # output to console
+	
+}
+
+# 5 50 2.664912 0.05849779 -0.106974 
+# 5 65 -6.425875 0.05849779 -0.106974 
+# 5 80 -5.386627 0.05849779 -0.106974 
+# 10 50 0.962807 0.0597767 -0.106974 
+# 10 65 -3.202967 0.0597767 -0.106974 
+# 10 80 -4.382169 0.0597767 -0.106974 
+# 15 50 -1.407368 0.0597767 -0.106974 
+# 15 65 -5.274303 0.0597767 -0.106974 
+# 15 80 -2.279639 0.0597767 -0.106974

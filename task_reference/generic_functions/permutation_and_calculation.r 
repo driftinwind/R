@@ -1,0 +1,12 @@
+
+
+for(i in seq(5, 10, 5))
+  for(j in seq(50, 80, 15))
+    
+
+{
+	prod <- i*j
+	
+	cat(i, j, prod, "\n")
+		
+}
