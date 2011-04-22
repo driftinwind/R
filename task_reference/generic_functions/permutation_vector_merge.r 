@@ -1,0 +1,10 @@
+
+
+for(i in seq(5, 10, 5))
+  for(j in seq(50, 80, 15))
+    for(k in seq(1, 2, .5))
+    
+
+{	
+	cat(i, j, k , "\n")		
+}

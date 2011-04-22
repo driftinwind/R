@@ -1,0 +1,1 @@
+> dinozero <- dinero[!(dinero$Lag.1 == 0)]

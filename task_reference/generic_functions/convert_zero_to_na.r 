@@ -1,7 +1,22 @@
+# no_zero <- function(x){
+# 	
+# 	for(i in 1:NROW(x))
+# 	
+# 	if (x[i] == 0)
+# 	    return ("NA")
+# 	else
+# 	    return (1)
+# }
+
+
 no_zero <- function(x){
 	
-	if (x==0)
-	    return ("NA")
+	for(i in 1:NROW(x)){
+	
+	if (x[i] == 0)
+	   x[i] <- "NA"
 	else
-	    return (1)
+	   x[i] <- x[i]}
+	
+	return(x)
 }

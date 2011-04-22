@@ -4,7 +4,7 @@ getSymbols("GLD")
                                    	
 GLD$fast    <- BBands(( GLD[,4] ), n=10, sd=0.5)                                         
 GLD$slow    <- BBands(( GLD[,4] ), n=30, sd=0.5)      
-GLD         <- na.locf(GLD, na.rm=TRUE)                                   
+# GLD         <- na.locf(GLD, na.rm=TRUE)                                   
                                                                           
 position 	<- ifelse (GLD$mavg > GLD$up.1, 1,                             
                 ifelse(GLD$mavg < GLD$dn.1, -1, NA))

@@ -1,0 +1,4 @@
+
+> methods(median)
+
+[1] median.default median.zoo

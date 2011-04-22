@@ -1,0 +1,16 @@
+
+> methods(class="xts")
+
+ [1] [.xts*                 [<-.xts*               align.time.xts*        as.complex.xts*        as.data.frame.xts*    
+ [6] as.double.xts*         as.integer.xts*        as.list.xts*           as.logical.xts*        as.matrix.xts*        
+[11] as.numeric.xts*        as.ts.xts*             as.xts.xts*            as.zoo.xts*            as.zooreg.xts*        
+[16] c.xts                  cbind.xts              CLASS<-.xts*           coredata.xts*          cummax.xts*           
+[21] cummin.xts*            cumprod.xts*           cumsum.xts*            diff.xts               dimnames.xts          
+[26] dimnames<-.xts         end.xts*               first.xts*             index.xts*             index<-.xts*          
+[31] indexClass<-.xts*      indexFormat<-.xts*     indexTZ.xts*           indexTZ<-.xts*         lag.xts               
+[36] Lag.xts*               last.xts*              lines.xts*             make.index.unique.xts* merge.xts             
+[41] na.locf.xts*           na.omit.xts*           Ops.xts*               plot.xts               points.xts*           
+[46] print.xts*             rbind.xts              split.xts              start.xts*             str.xts*              
+[51] time<-.xts*            xtsAttributes<-.xts*  
+
+Non-visible functions are asterisked

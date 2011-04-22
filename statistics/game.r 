@@ -1,0 +1,19 @@
+# how much of your initial equity of chips is left after playing
+# a game that includes a vector of returns?
+
+first  <- c(.25, .25, -.4)
+second <- c(-.4, .25, .25)
+third  <- c(.25, -.4, .25)
+
+
+
+game <- function(x){
+	
+	start <- 100
+	
+	for(i in 1:NROW(x))
+	
+	start <- start + start*x[i]
+        
+	return(start) 
+}

@@ -1,0 +1,7 @@
+x <- c(1,2,3,4,NA)
+
+x[x==2]           
+# [1]  2 NA       # returns NA
+                  
+x[which(x==2)]    
+# [1] 2           # does not return NA

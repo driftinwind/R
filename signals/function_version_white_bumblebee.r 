@@ -1,0 +1,18 @@
+
+bee <- function(sym="GLD", fast=10, slow=30, buffer=.5){
+                                
+require ("quantmod")                             	  
+                                                 	
+x           <- getSymbols(sym, auto.assign=FALSE)                                          	
+x$fast      <- BBands(( x[,4] ), n=fast, sd=buffer)                                         
+x$slow      <- BBands(( x[,4] ), n=slow, sd=buffer)      
+x           <- na.locf(x, na.rm=TRUE)                                   
+                                                                          
+position 	<- ifelse (x$mavg > x$up.1, 1,                             
+                ifelse(x$mavg < x$dn.1, -1, NA))
+			
+position    <- na.locf(position, na.rm=TRUE)    
+
+return(position)
+
+}
