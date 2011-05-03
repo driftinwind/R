@@ -1,3 +1,6 @@
+
+
+
 require(quantmod)
 
 getSymbols("GLD")

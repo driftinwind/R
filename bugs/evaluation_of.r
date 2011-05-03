@@ -8,7 +8,7 @@ gold$log_self <- dailyReturn(Cl(gold), type="log")
 # Add log returs of Perfect Profit
 
  gold$perfect     <- abs(gold[,2] - gold[,3])
- gold$log_perfect <- log((gold$perfect/gold[,4]) + 1)
+ gold$log_perfect <- log(gold$perfect/gold[,4] + 1)
 
 # Days system traded
 
