@@ -1,0 +1,6 @@
+pulp <- function(sym){
+	require("quantmod")
+	juice <- getSymbols(sym, auto.assign=FALSE)
+	juice$log_ret <- dailyReturn(Cl(juice), type="log")
+	assign(sym, juice, envir=.GlobalEnv)
+}

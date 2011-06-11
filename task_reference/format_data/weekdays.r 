@@ -1,7 +1,7 @@
 require(quantmod)
 require(chron)
 
-corn <- as.xts(read.zoo("~/Cream/R/RMilk/task_reference/test_data/CORN.csv", sep=",", format ="%m/%d/%Y", header=TRUE))
+corn <- as.xts(read.zoo("~/Cream/R/task_reference/test_data/CORN.csv", sep=",", format ="%m/%d/%Y", header=TRUE))
 
 head(corn)
 

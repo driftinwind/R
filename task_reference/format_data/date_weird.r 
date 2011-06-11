@@ -1,0 +1,5 @@
+require("quantmod")
+
+work <- as.xts(read.zoo("~/Downloads/dataset.csv", sep=",", format="%d-%b-%Y", header=TRUE))
+
+head(work)
