@@ -1,0 +1,1 @@
+ones <- subset(corn, ANS == 1)
